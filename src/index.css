@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-noir: #050505;
+    --accent-amber: #F59E0B;
+    --accent-emerald: #10B981;
+    --accent-violet: #8B5CF6;
+    --text-primary: #F9FAFB;
+    --text-secondary: #9CA3AF;
+  }
+
+  body {
+    background-color: var(--bg-noir);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    selection-background-color: #F59E0B;
+    selection-color: #000000;
+  }
+}
+
+/* Kinetic Dot-Matrix Canvas Pattern inspired by dotmatrix.zzzzshawn.cloud & Aceternity */
+.bg-dot-matrix {
+  background-image: radial-gradient(rgba(245, 158, 11, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-dot-matrix-dense {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+/* Glassmorphism & UI Accents inspired by HeroUI & Magic UI Pro */
+.glass-panel {
+  background: rgba(15, 15, 18, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+.glass-panel-amber {
+  background: rgba(245, 158, 11, 0.04);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.15);
+}
+
+.glass-panel-emerald {
+  background: rgba(16, 185, 129, 0.04);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.15);
+}
+
+/* Glowing text & anamorphic lens flare simulation */
+.text-glow-amber {
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.6), 0 0 40px rgba(245, 158, 11, 0.3);
+}
+
+.text-glow-emerald {
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.6), 0 0 40px rgba(16, 185, 129, 0.3);
+}
+
+.glow-box-amber {
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.25);
+}
+
+/* Anamorphic Lens Flare Line */
+.anamorphic-flare {
+  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.8), rgba(255, 255, 255, 0.9), rgba(245, 158, 11, 0.8), transparent);
+  height: 2px;
+  filter: blur(0.5px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #F59E0B;
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2.5s infinite;
+}
