@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Layers, Film, Tv, Radio, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Layers, CheckCircle2 } from 'lucide-react';
 import { playClick } from '../../utils/audioSystem';
 
 const PROCESS_STEPS = [
@@ -48,19 +48,16 @@ export default function ProcessTimelineSection() {
   const currentStep = PROCESS_STEPS[activeStep];
 
   return (
-    <section id="process" className="py-24 px-4 relative bg-[#07070a] border-t border-zinc-800/80">
-      {/* Background Dot Matrix */}
-      <div className="absolute inset-0 bg-dot-matrix opacity-30 pointer-events-none" />
-
+    <section id="process" className="py-28 px-4 relative bg-[#050505] border-t border-white/10">
       <div className="max-w-7xl mx-auto space-y-12 relative z-10">
         {/* Section Header */}
-        <div className="space-y-3 text-left">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-amber-500 uppercase tracking-widest">
-            <Layers className="w-4 h-4" />
+        <div className="space-y-3 text-left font-mono">
+          <div className="inline-flex items-center gap-2 text-xs text-zinc-400 uppercase tracking-widest">
+            <Layers className="w-4 h-4 text-white" />
             <span>MODULE 03 // STORYTELLING JOURNEY</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-serif font-black text-white tracking-tight">
-            FROM SCRIPT TO 60-SECOND SCREEN
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase">
+            PRODUCTION BLUEPRINT
           </h2>
           <p className="text-sm text-zinc-400 max-w-xl font-sans">
             Our systematic 4-phase production operating system for creating high-impact 3D cinema assets.
@@ -78,19 +75,19 @@ export default function ProcessTimelineSection() {
                   playClick();
                   setActiveStep(idx);
                 }}
-                className={`p-6 rounded-2xl border text-left transition-all relative overflow-hidden group ${
+                className={`p-6 rounded-2xl border text-left transition-all relative overflow-hidden font-mono ${
                   active
-                    ? 'glass-panel-amber border-amber-500/60 shadow-xl shadow-amber-500/10'
-                    : 'glass-panel border-zinc-800/80 hover:border-zinc-700'
+                    ? 'bg-zinc-900 border-white text-white shadow-xl'
+                    : 'bg-zinc-950 border-white/10 text-zinc-500 hover:border-white/20 hover:text-zinc-300'
                 }`}
               >
                 <div className="flex items-center justify-between mb-4">
-                  <span className={`text-2xl font-mono font-black ${active ? 'text-amber-400' : 'text-zinc-600'}`}>
+                  <span className={`text-2xl font-black ${active ? 'text-white' : 'text-zinc-600'}`}>
                     {item.step}
                   </span>
-                  <span className="text-[10px] font-mono text-zinc-500 uppercase">{item.duration}</span>
+                  <span className="text-[10px] text-zinc-500 uppercase">{item.duration}</span>
                 </div>
-                <h4 className={`text-sm font-bold tracking-wide ${active ? 'text-white' : 'text-zinc-400 group-hover:text-zinc-200'}`}>
+                <h4 className="text-xs font-bold tracking-wider uppercase">
                   {item.title}
                 </h4>
               </button>
@@ -104,37 +101,33 @@ export default function ProcessTimelineSection() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="glass-panel rounded-2xl border border-amber-500/30 p-8 sm:p-10 shadow-2xl relative overflow-hidden"
+          className="glass-panel rounded-3xl border border-white/10 p-8 sm:p-10 shadow-2xl relative overflow-hidden"
         >
-          {/* Ambient Flare */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-[90px] pointer-events-none" />
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center font-mono">
             <div className="lg:col-span-8 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono">
-                <Sparkles className="w-3.5 h-3.5" />
-                PHASE {currentStep.step} // {currentStep.subtitle}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-zinc-900 border border-white/10 text-white text-xs">
+                PHASE {currentStep.step} // {currentStep.subtitle.toUpperCase()}
               </div>
 
-              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white tracking-wide">
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight uppercase">
                 {currentStep.title}
               </h3>
 
-              <p className="text-sm text-zinc-300 leading-relaxed font-sans max-w-2xl">
+              <p className="text-sm text-zinc-400 leading-relaxed font-sans max-w-2xl">
                 {currentStep.desc}
               </p>
 
-              <div className="pt-4 flex flex-wrap items-center gap-6 text-xs font-mono text-zinc-400">
+              <div className="pt-4 flex flex-wrap items-center gap-6 text-xs text-zinc-400">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <CheckCircle2 className="w-4 h-4 text-white" />
                   <span>DELIVERABLE: <strong className="text-white">{currentStep.deliverable}</strong></span>
                 </div>
               </div>
             </div>
 
-            <div className="lg:col-span-4 bg-zinc-900/80 border border-zinc-800 p-6 rounded-xl space-y-3 font-mono">
-              <span className="text-xs text-zinc-500 uppercase block">KEY QUALITY BENCHMARK</span>
-              <span className="text-2xl font-extrabold text-amber-400 block">{currentStep.stat}</span>
+            <div className="lg:col-span-4 bg-zinc-900 border border-white/10 p-6 rounded-2xl space-y-3">
+              <span className="text-[10px] text-zinc-500 uppercase block">QUALITY BENCHMARK</span>
+              <span className="text-2xl font-black text-white block">{currentStep.stat}</span>
               <p className="text-[11px] text-zinc-400 leading-relaxed">
                 Guaranteed studio standard verified across all 60-second agency projects.
               </p>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Film, Radio, ShieldCheck, Heart } from 'lucide-react';
 import { playClick } from '../../utils/audioSystem';
 
 export default function Footer() {
@@ -12,16 +11,16 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#040406] border-t border-zinc-800/80 py-16 px-4 font-mono text-xs text-zinc-400 relative">
+    <footer className="bg-[#050505] border-t border-white/10 py-16 px-4 font-mono text-xs text-zinc-400 relative">
       <div className="max-w-7xl mx-auto space-y-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Col 1: Brand */}
           <div className="space-y-4 md:col-span-2">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-amber-500 text-black font-black font-mono text-sm flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-white text-black font-extrabold font-mono text-xs flex items-center justify-center">
                 1M
               </div>
-              <span className="text-base font-serif font-bold text-white tracking-wider">
+              <span className="text-sm font-extrabold text-white tracking-widest uppercase">
                 A MINUTE FILM
               </span>
             </div>
@@ -32,7 +31,7 @@ export default function Footer() {
 
           {/* Col 2: Studio Locations */}
           <div className="space-y-3">
-            <span className="text-amber-500 font-bold uppercase tracking-wider block">
+            <span className="text-white font-bold uppercase tracking-widest block">
               STUDIO HUBS
             </span>
             <ul className="space-y-1.5 text-zinc-400">
@@ -44,28 +43,33 @@ export default function Footer() {
 
           {/* Col 3: Navigation Quick Links */}
           <div className="space-y-3">
-            <span className="text-emerald-400 font-bold uppercase tracking-wider block">
+            <span className="text-white font-bold uppercase tracking-widest block">
               NAVIGATION
             </span>
             <ul className="space-y-1.5 text-zinc-400">
               <li>
-                <button onClick={() => scrollToSection('hero')} className="hover:text-amber-400">
-                  00. TOP / HERO
+                <button onClick={() => scrollToSection('hero')} className="hover:text-white transition-colors">
+                  [00] TOP / HERO
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollToSection('reel')} className="hover:text-amber-400">
-                  01. THE REEL MATRIX
+                <button onClick={() => scrollToSection('reel')} className="hover:text-white transition-colors">
+                  [01] THE REEL MATRIX
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollToSection('simulator')} className="hover:text-amber-400">
-                  02. 3D SIMULATOR
+                <button onClick={() => scrollToSection('simulator')} className="hover:text-white transition-colors">
+                  [02] 3D SIMULATOR
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollToSection('estimator')} className="hover:text-amber-400">
-                  03. ESTIMATOR
+                <button onClick={() => scrollToSection('process')} className="hover:text-white transition-colors">
+                  [03] PROCESS
+                </button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('estimator')} className="hover:text-white transition-colors">
+                  [04] ESTIMATOR
                 </button>
               </li>
             </ul>
@@ -73,7 +77,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom copyright */}
-        <div className="pt-8 border-t border-zinc-900 flex flex-wrap items-center justify-between gap-4 text-[11px] text-zinc-500">
+        <div className="pt-8 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-[11px] text-zinc-500">
           <span>© 2026 A MINUTE FILM STUDIO. ALL RIGHTS RESERVED.</span>
           <span className="flex items-center gap-2">
             ENGINEERED WITH REACT, THREE.JS, & WEBGL

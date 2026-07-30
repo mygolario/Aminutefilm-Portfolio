@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Film, Play, Award, Eye, Filter, ArrowUpRight, Sparkles } from 'lucide-react';
+import { Film, Play, Award, ArrowUpRight } from 'lucide-react';
 import { playClick } from '../../utils/audioSystem';
 
 export const REEL_DATA = [
   {
     id: 'film-1',
-    title: 'CYBER NOIR: CHRONOS',
+    title: 'CHRONOS: ANAMORPHIC TIMEPIECE',
     category: 'Commercial',
     duration: '00:01:00',
     year: '2026',
     image: '/assets/images/film_noir_amber.jpg',
-    description: 'A 60-second futuristic timepiece commercial combining high-speed anamorphic tracking shots with atmospheric amber lighting and volumetric neon fog.',
+    description: 'A 60-second luxury timepiece commercial combining high-speed anamorphic tracking shots with atmospheric shadow dynamics.',
     quote: 'In 60 seconds, time becomes tangible.',
     awards: ['Cannes Gold Lion 2026', 'Awwwards Site of the Month', 'Red Dot Design Award'],
     breakdown: [
       { timecode: '00:00 - 00:15', title: 'Macro Lens Entrance', desc: 'Extreme close-up of internal tourbillon gearing with 3D depth of field.' },
-      { timecode: '00:15 - 00:40', title: 'Cyber City Pursuit', desc: 'Anamorphic tracking vehicle shot on rain-slicked neon highways.' },
+      { timecode: '00:15 - 00:40', title: 'Monochrome Pursuit', desc: 'Anamorphic tracking vehicle shot across architectural structures.' },
       { timecode: '00:40 - 01:00', title: 'Climax & Brand Reveal', desc: 'Volumetric light beam converging into floating brand insignia.' }
     ],
     specs: {
@@ -33,35 +33,35 @@ export const REEL_DATA = [
     duration: '00:01:00',
     year: '2026',
     image: '/assets/images/sci_fi_emerald.jpg',
-    description: 'An immersive science fiction teaser exploring deep space discovery, featuring custom WebGL particle shaders and emerald luminescent glow.',
+    description: 'An immersive science fiction teaser exploring deep space discovery, featuring custom WebGL particle shaders and volumetric lighting.',
     quote: 'Beyond the atmosphere lies absolute silence.',
     awards: ['SIGGRAPH Best VFX Short', 'FWA of the Day', 'Vimeo Staff Pick'],
     breakdown: [
       { timecode: '00:00 - 00:20', title: 'Orbital Descent', desc: 'High-altitude planetary entry with reactive atmospheric burn.' },
-      { timecode: '00:20 - 00:45', title: 'Alien Specimen Discovery', desc: 'Luminescent emerald fluid dynamics physics simulation.' },
-      { timecode: '00:45 - 01:00', title: 'Hyperspace Jump', desc: 'Kinetic light streak warp velocity transition.' }
+      { timecode: '00:20 - 00:45', title: 'Specimen Discovery', desc: 'Luminescent fluid dynamics physics simulation.' },
+      { timecode: '00:45 - 01:00', title: 'Hyperspace Transition', desc: 'Kinetic light streak warp velocity transition.' }
     ],
     specs: {
       camera: 'ARRI Alexa 35',
       lens: 'ARRI Master Anamorphic 50mm',
-      color: 'Custom LUT - Emerald Deep Space',
+      color: 'Custom LUT - Monochromatic Deep Space',
       fps: '48 FPS High Frame Rate'
     }
   },
   {
     id: 'film-3',
-    title: 'MONOCHROME: HAUTE COUTURE',
+    title: 'HAUTE COUTURE ARCHITECTURE',
     category: 'Fashion',
     duration: '00:01:00',
     year: '2025',
     image: '/assets/images/fashion_monochrome.jpg',
-    description: 'A striking high-contrast black-and-white fashion editorial film exploring architectural geometry, shadowplay, and silk liquid motion.',
+    description: 'A striking high-contrast fashion editorial film exploring architectural geometry, shadowplay, and fluid silk motion.',
     quote: 'Elegance distilled into light and shadow.',
     awards: ['Vogue International Film Award', 'Clios Fashion Gold'],
     breakdown: [
-      { timecode: '00:00 - 00:18', title: 'Architectural Shadows', desc: 'High-contrast geometric sunlit shadows across concrete columns.' },
-      { timecode: '00:18 - 00:42', title: 'Slow-Motion Fabric Drift', desc: '120 FPS high-speed phantom flex silk movement.' },
-      { timecode: '00:42 - 01:00', title: 'Monochrome Portraiture', desc: 'Razor-sharp silver haloid film texture reveal.' }
+      { timecode: '00:00 - 00:18', title: 'Geometric Shadows', desc: 'High-contrast geometric sunlit shadows across concrete columns.' },
+      { timecode: '00:18 - 00:42', title: 'Fabric Drift', desc: '120 FPS high-speed phantom flex silk movement.' },
+      { timecode: '00:42 - 01:00', title: 'Silver Halide Texture', desc: 'Razor-sharp silver film texture reveal.' }
     ],
     specs: {
       camera: 'Phantom Flex 4K',
@@ -77,13 +77,13 @@ export const REEL_DATA = [
     duration: '00:01:00',
     year: '2025',
     image: '/assets/images/narrative_dusk.jpg',
-    description: 'An emotional 60-second micro-narrative captured during golden hour in remote mountain terrain, featuring cinematic dusk horizons.',
+    description: 'An emotional 60-second micro-narrative captured during golden hour in remote mountain terrain, featuring cinematic horizons.',
     quote: 'Every horizon holds a story waiting to be told.',
     awards: ['Sundance Micro-Short Winner', 'Short of the Week'],
     breakdown: [
-      { timecode: '00:00 - 00:15', title: 'Ridge Line Silhouette', desc: 'Golden hour backlit landscape with anamorphic lens flare.' },
-      { timecode: '00:15 - 00:45', title: 'Emotional Confrontation', desc: 'Intimate portrait lighting with natural wind motion.' },
-      { timecode: '00:45 - 01:00', title: 'Twilight Fade', desc: 'Deep crimson twilight horizon dissolving to black.' }
+      { timecode: '00:00 - 00:15', title: 'Silhouette Entrance', desc: 'Golden hour backlit landscape with anamorphic flare.' },
+      { timecode: '00:15 - 00:45', title: 'Portraiture', desc: 'Intimate portrait lighting with natural wind motion.' },
+      { timecode: '00:45 - 01:00', title: 'Twilight Resolve', desc: 'Deep twilight horizon dissolving to black.' }
     ],
     specs: {
       camera: 'Sony Venice 2 8K',
@@ -104,28 +104,25 @@ export default function ReelMatrixSection({ onSelectFilm }) {
     : REEL_DATA.filter((f) => f.category === activeFilter);
 
   return (
-    <section id="reel" className="py-24 px-4 relative bg-[#070709] border-t border-zinc-800/80">
-      {/* Glow background accent */}
-      <div className="absolute top-1/2 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-[150px] pointer-events-none" />
-
+    <section id="reel" className="py-28 px-4 relative bg-[#050505] border-t border-white/10">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-amber-500 uppercase tracking-widest">
-              <Film className="w-4 h-4" />
+            <div className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400 uppercase tracking-widest">
+              <Film className="w-4 h-4 text-white" />
               <span>MODULE 01 // SHOWCASE MATRIX</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-serif font-black text-white tracking-tight">
-              THE 60-SECOND REEL MATRIX
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase">
+              THE REEL MATRIX
             </h2>
             <p className="text-sm text-zinc-400 max-w-xl font-sans">
-              Click any film card to launch the interactive Cinema Stage, inspect shot breakdowns, camera specs, and director's cut.
+              Select any film card to launch the high-resolution Cinema Viewport, inspect camera telemetry, lens specifications, and scene breakdowns.
             </p>
           </div>
 
           {/* Filter Pills */}
-          <div className="flex flex-wrap gap-2 glass-panel p-1.5 rounded-xl border border-zinc-800">
+          <div className="flex flex-wrap gap-2 bg-zinc-900/80 p-1.5 rounded-full border border-white/10">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -133,10 +130,10 @@ export default function ReelMatrixSection({ onSelectFilm }) {
                   playClick();
                   setActiveFilter(cat);
                 }}
-                className={`px-4 py-2 rounded-lg text-xs font-mono transition-all ${
+                className={`px-4 py-2 rounded-full text-xs font-mono transition-all ${
                   activeFilter === cat
-                    ? 'bg-amber-500 text-black font-bold shadow-md shadow-amber-500/20'
-                    : 'text-zinc-400 hover:text-white hover:bg-zinc-800/60'
+                    ? 'bg-white text-black font-bold'
+                    : 'text-zinc-400 hover:text-white'
                 }`}
               >
                 {cat}
@@ -158,48 +155,42 @@ export default function ReelMatrixSection({ onSelectFilm }) {
                 playClick();
                 onSelectFilm(film);
               }}
-              className="group relative rounded-2xl overflow-hidden glass-panel border border-zinc-800/80 hover:border-amber-500/50 transition-all duration-500 cursor-pointer shadow-xl"
+              className="group relative rounded-3xl overflow-hidden glass-panel glass-panel-hover border border-white/10 cursor-pointer"
             >
               {/* Card Image Stage */}
               <div className="relative aspect-video overflow-hidden bg-black">
                 <img
                   src={film.image}
                   alt={film.title}
-                  className="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700"
+                  className="w-full h-full object-cover opacity-75 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700"
                 />
 
-                {/* Gradient vignette */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#070709] via-black/20 to-transparent" />
-
                 {/* Top Badge Overlay */}
-                <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                  <span className="bg-black/70 border border-amber-500/30 px-3 py-1 rounded-full text-[10px] font-mono text-amber-400 font-bold tracking-wider">
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10 font-mono text-[10px]">
+                  <span className="bg-black/80 border border-white/20 px-3 py-1 rounded-full text-white uppercase tracking-wider font-bold">
                     {film.category}
                   </span>
-                  <span className="bg-black/70 border border-zinc-800 px-3 py-1 rounded-full text-[10px] font-mono text-zinc-300">
+                  <span className="bg-black/80 border border-white/10 px-3 py-1 rounded-full text-zinc-300">
                     {film.duration}
                   </span>
                 </div>
 
-                {/* Hover Play Button Overlay */}
+                {/* Hover Play Button */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-                  <div className="w-16 h-16 rounded-full bg-amber-500 text-black flex items-center justify-center shadow-2xl shadow-amber-500/50 transform group-hover:scale-110 transition-transform">
-                    <Play className="w-7 h-7 fill-current translate-x-0.5" />
+                  <div className="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform">
+                    <Play className="w-6 h-6 fill-current translate-x-0.5" />
                   </div>
                 </div>
-
-                {/* Bottom Flare */}
-                <div className="absolute inset-x-0 bottom-0 anamorphic-flare opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
 
               {/* Card Content Info */}
-              <div className="p-6 space-y-3">
+              <div className="p-6 space-y-3 font-mono">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-bold font-serif text-white group-hover:text-amber-400 transition-colors flex items-center gap-2">
+                  <h3 className="text-lg font-bold text-white group-hover:text-zinc-200 transition-colors flex items-center gap-2 uppercase">
                     {film.title}
-                    <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-amber-500" />
+                    <ArrowUpRight className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
                   </h3>
-                  <span className="text-xs font-mono text-zinc-500">{film.year}</span>
+                  <span className="text-xs text-zinc-500">{film.year}</span>
                 </div>
 
                 <p className="text-xs text-zinc-400 font-sans leading-relaxed line-clamp-2">
@@ -207,9 +198,9 @@ export default function ReelMatrixSection({ onSelectFilm }) {
                 </p>
 
                 {/* Award badges */}
-                <div className="pt-2 flex flex-wrap gap-2 text-[10px] font-mono text-amber-300/80">
-                  <span className="flex items-center gap-1 bg-amber-500/10 px-2.5 py-1 rounded-md border border-amber-500/20">
-                    <Award className="w-3 h-3 text-amber-400" />
+                <div className="pt-2 flex flex-wrap gap-2 text-[10px]">
+                  <span className="flex items-center gap-1.5 bg-zinc-900 px-3 py-1 rounded-full border border-white/10 text-zinc-300">
+                    <Award className="w-3 h-3 text-white" />
                     {film.awards[0]}
                   </span>
                 </div>

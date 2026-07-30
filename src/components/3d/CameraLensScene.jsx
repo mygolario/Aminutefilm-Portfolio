@@ -1,104 +1,102 @@
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, MeshTransmissionMaterial, Sparkles, OrbitControls } from '@react-three/drei';
+import { Float, MeshTransmissionMaterial, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 
 function LensAssembly({ mousePos }) {
   const groupRef = useRef();
   const outerRingRef = useRef();
   const innerElementRef = useRef();
+  const apertureGroupRef = useRef();
 
   useFrame((state, delta) => {
     if (groupRef.current) {
-      // Smooth subtle mouse interaction tilt
-      const targetX = (mousePos.y * 0.4);
-      const targetY = (mousePos.x * 0.4);
-      groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetX, 0.05);
-      groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetY, 0.05);
+      const targetX = (mousePos.y * 0.35);
+      const targetY = (mousePos.x * 0.35);
+      groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetX, 0.06);
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetY, 0.06);
     }
     if (outerRingRef.current) {
-      outerRingRef.current.rotation.z += delta * 0.15;
+      outerRingRef.current.rotation.z += delta * 0.12;
     }
     if (innerElementRef.current) {
-      innerElementRef.current.rotation.z -= delta * 0.25;
+      innerElementRef.current.rotation.z -= delta * 0.18;
+    }
+    if (apertureGroupRef.current) {
+      // Subtle iris blade movement simulation
+      const time = state.clock.getElapsedTime();
+      apertureGroupRef.current.rotation.z = Math.sin(time * 0.8) * 0.15;
     }
   });
 
   return (
     <group ref={groupRef} position={[0, 0, 0]}>
-      {/* Outer Metallic Lens Barrel */}
+      {/* Titanium Anodized Outer Lens Barrel */}
       <mesh ref={outerRingRef} position={[0, 0, 0]}>
-        <cylinderGeometry args={[2.4, 2.4, 0.8, 64, 1, true]} />
+        <cylinderGeometry args={[2.5, 2.5, 0.9, 64, 1, true]} />
         <meshStandardMaterial
-          color="#18181b"
-          metalness={0.95}
-          roughness={0.15}
-          wireframe={false}
+          color="#121215"
+          metalness={0.98}
+          roughness={0.12}
           side={THREE.DoubleSide}
         />
       </mesh>
 
-      {/* Gold Knurled Focus Ring */}
-      <mesh position={[0, 0, 0.4]}>
-        <torusGeometry args={[2.42, 0.06, 16, 100]} />
+      {/* Hairline Chrome Focus Ring */}
+      <mesh position={[0, 0, 0.45]}>
+        <torusGeometry args={[2.52, 0.04, 24, 120]} />
         <meshStandardMaterial
-          color="#F59E0B"
-          metalness={0.9}
-          roughness={0.2}
-          emissive="#F59E0B"
-          emissiveIntensity={0.2}
+          color="#E4E4E7"
+          metalness={0.95}
+          roughness={0.08}
         />
       </mesh>
 
-      {/* Inner Lens Element Glass Shader */}
-      <mesh ref={innerElementRef} position={[0, 0, 0.1]}>
-        <sphereGeometry args={[2.1, 48, 48, 0, Math.PI * 2, 0, Math.PI * 0.45]} />
+      {/* Front Optical Convex Glass Element */}
+      <mesh ref={innerElementRef} position={[0, 0, 0.15]}>
+        <sphereGeometry args={[2.2, 64, 64, 0, Math.PI * 2, 0, Math.PI * 0.42]} />
         <MeshTransmissionMaterial
           backside
           samples={16}
           resolution={512}
-          transmission={0.95}
-          roughness={0.05}
+          transmission={0.98}
+          roughness={0.03}
           clearcoat={1}
-          clearcoatRoughness={0.1}
-          thickness={0.8}
-          ior={1.6}
-          chromaticAberration={0.15}
-          anisotropy={0.3}
-          distortion={0.2}
-          distortionScale={0.3}
-          temporalDistortion={0.1}
-          color="#FEF3C7"
+          clearcoatRoughness={0.05}
+          thickness={0.7}
+          ior={1.62}
+          chromaticAberration={0.08}
+          anisotropy={0.2}
+          distortion={0.15}
+          color="#FFFFFF"
         />
       </mesh>
 
-      {/* Aperture Blades Ring (8 blades) */}
-      <group position={[0, 0, -0.2]}>
-        {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, idx) => (
+      {/* 9-Blade Cinema Iris Aperture Assembly */}
+      <group ref={apertureGroupRef} position={[0, 0, -0.15]}>
+        {[0, 40, 80, 120, 160, 200, 240, 280, 320].map((angle, idx) => (
           <mesh
             key={idx}
             rotation={[0, 0, (angle * Math.PI) / 180]}
             position={[
-              Math.cos((angle * Math.PI) / 180) * 0.9,
-              Math.sin((angle * Math.PI) / 180) * 0.9,
+              Math.cos((angle * Math.PI) / 180) * 0.95,
+              Math.sin((angle * Math.PI) / 180) * 0.95,
               0,
             ]}
           >
-            <planeGeometry args={[1.2, 0.4]} />
-            <meshStandardMaterial color="#09090b" metalness={0.8} roughness={0.3} />
+            <planeGeometry args={[1.3, 0.35]} />
+            <meshStandardMaterial color="#0A0A0C" metalness={0.9} roughness={0.2} />
           </mesh>
         ))}
       </group>
 
-      {/* Anamorphic Blue/Amber Flare Center Core */}
-      <mesh position={[0, 0, -0.5]}>
-        <cylinderGeometry args={[1.5, 1.5, 0.2, 32]} />
+      {/* Internal Monochromatic Coated Rear Element */}
+      <mesh position={[0, 0, -0.45]}>
+        <cylinderGeometry args={[1.6, 1.6, 0.1, 32]} />
         <meshStandardMaterial
           color="#050505"
-          emissive="#F59E0B"
-          emissiveIntensity={0.6}
-          transparent
-          opacity={0.7}
+          metalness={0.9}
+          roughness={0.1}
         />
       </mesh>
     </group>
@@ -107,42 +105,23 @@ function LensAssembly({ mousePos }) {
 
 export default function CameraLensScene({ mousePos = { x: 0, y: 0 } }) {
   return (
-    <div className="w-full h-full min-h-[420px] relative flex items-center justify-center">
-      {/* Background glow behind 3D lens */}
-      <div className="absolute w-72 h-72 rounded-full bg-amber-500/15 blur-[90px] pointer-events-none" />
-      <div className="absolute w-60 h-60 rounded-full bg-emerald-500/10 blur-[80px] pointer-events-none translate-x-20" />
+    <div className="w-full h-full min-h-[440px] relative flex items-center justify-center">
+      {/* Subtle depth lighting background */}
+      <div className="absolute w-72 h-72 rounded-full bg-white/5 blur-[100px] pointer-events-none" />
 
       <Canvas
-        camera={{ position: [0, 0, 6], fov: 45 }}
+        camera={{ position: [0, 0, 6.2], fov: 42 }}
         gl={{ antialias: true, alpha: true }}
         className="w-full h-full pointer-events-auto"
       >
-        <ambientLight intensity={0.7} />
-        <directionalLight position={[5, 8, 5]} intensity={2.5} color="#F59E0B" />
-        <directionalLight position={[-5, -5, -2]} intensity={1.8} color="#10B981" />
-        <pointLight position={[0, 0, 3]} intensity={1.5} color="#FFFFFF" />
+        <ambientLight intensity={0.8} />
+        <directionalLight position={[6, 8, 6]} intensity={3.0} color="#FFFFFF" />
+        <directionalLight position={[-6, -6, -3]} intensity={1.5} color="#A1A1AA" />
+        <pointLight position={[0, 0, 3]} intensity={1.2} color="#FFFFFF" />
 
-        <Float speed={2} rotationIntensity={0.5} floatIntensity={0.6}>
+        <Float speed={1.8} rotationIntensity={0.3} floatIntensity={0.4}>
           <LensAssembly mousePos={mousePos} />
         </Float>
-
-        {/* Cinematic Dust & Lens Particle Effects */}
-        <Sparkles
-          count={80}
-          scale={7}
-          size={2.5}
-          speed={0.4}
-          opacity={0.6}
-          color="#F59E0B"
-        />
-        <Sparkles
-          count={40}
-          scale={6}
-          size={2}
-          speed={0.6}
-          opacity={0.4}
-          color="#10B981"
-        />
 
         <OrbitControls enableZoom={false} enablePan={false} maxPolarAngle={Math.PI / 1.8} minPolarAngle={Math.PI / 2.5} />
       </Canvas>

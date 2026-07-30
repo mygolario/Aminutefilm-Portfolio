@@ -1,41 +1,30 @@
 import React, { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Float, MeshDistortMaterial, Sparkles } from '@react-three/drei';
-import { Sliders, Sun, Eye, Camera, Aperture, Check, Layers, RefreshCw } from 'lucide-react';
+import { OrbitControls, Float, MeshDistortMaterial } from '@react-three/drei';
+import { Camera, Aperture, Sun, Layers, RefreshCw, Check } from 'lucide-react';
 import { playClick, playLensRotate } from '../../utils/audioSystem';
 
 const LIGHTING_PRESETS = {
   noir: {
-    name: 'Noir Gold',
-    ambient: '#0f0c06',
-    dir1: '#F59E0B',
-    dir2: '#78350F',
-    bgGlow: 'from-amber-500/20 via-amber-950/10 to-transparent',
-    accent: '#F59E0B',
+    name: 'Monochromatic Studio',
+    ambient: '#0A0A0C',
+    dir1: '#FFFFFF',
+    dir2: '#52525B',
+    accent: '#FFFFFF',
   },
-  cyber: {
-    name: 'Cyber Neon',
-    ambient: '#041619',
-    dir1: '#10B981',
-    dir2: '#06B6D4',
-    bgGlow: 'from-emerald-500/20 via-cyan-950/10 to-transparent',
-    accent: '#10B981',
+  anamorphic: {
+    name: 'Anamorphic Titanium',
+    ambient: '#050505',
+    dir1: '#E4E4E7',
+    dir2: '#27272A',
+    accent: '#E4E4E7',
   },
-  monolith: {
-    name: 'Monolith Silver',
-    ambient: '#111827',
-    dir1: '#F3F4F6',
-    dir2: '#4B5563',
-    bgGlow: 'from-zinc-400/20 via-zinc-900/10 to-transparent',
-    accent: '#E5E7EB',
-  },
-  crimson: {
-    name: 'Crimson Dusk',
-    ambient: '#1a0505',
-    dir1: '#EF4444',
-    dir2: '#B91C1C',
-    bgGlow: 'from-red-500/20 via-red-950/10 to-transparent',
-    accent: '#EF4444',
+  highcontrast: {
+    name: 'High Contrast Key',
+    ambient: '#000000',
+    dir1: '#FFFFFF',
+    dir2: '#18181B',
+    accent: '#FFFFFF',
   },
 };
 
@@ -52,32 +41,30 @@ function SubjectModel({ focalLens, presetKey }) {
 
   return (
     <group>
-      <Float speed={spec.speed} rotationIntensity={0.8} floatIntensity={1}>
-        {/* Abstract Cinematic Sculpture */}
+      <Float speed={spec.speed} rotationIntensity={0.6} floatIntensity={0.8}>
+        {/* Sculptural Aperture Core */}
         <mesh position={[0, 0, 0]}>
           <icosahedronGeometry args={[1.6, 2]} />
           <MeshDistortMaterial
             color={currentPreset.accent}
-            roughness={0.15}
-            metalness={0.85}
+            roughness={0.12}
+            metalness={0.92}
             distort={spec.distortion}
             speed={2}
           />
         </mesh>
 
-        {/* Floating Concentric Aperture Rings */}
+        {/* Concentric Precision Rings */}
         <mesh position={[0, 0, 0]} rotation={[Math.PI / 4, 0, 0]}>
-          <torusGeometry args={[2.2, 0.04, 16, 100]} />
-          <meshStandardMaterial color={currentPreset.accent} metalness={0.9} roughness={0.1} />
+          <torusGeometry args={[2.2, 0.03, 16, 100]} />
+          <meshStandardMaterial color="#FFFFFF" metalness={0.95} roughness={0.05} />
         </mesh>
 
         <mesh position={[0, 0, 0]} rotation={[-Math.PI / 4, Math.PI / 3, 0]}>
-          <torusGeometry args={[2.6, 0.03, 16, 100]} />
-          <meshStandardMaterial color="#FFFFFF" metalness={0.95} roughness={0.05} />
+          <torusGeometry args={[2.6, 0.02, 16, 100]} />
+          <meshStandardMaterial color="#71717A" metalness={0.9} roughness={0.1} />
         </mesh>
       </Float>
-
-      <Sparkles count={50} scale={6} size={2} color={currentPreset.accent} />
     </group>
   );
 }
@@ -85,7 +72,7 @@ function SubjectModel({ focalLens, presetKey }) {
 export default function DirectorsSimulator() {
   const [presetKey, setPresetKey] = useState('noir');
   const [focalLens, setFocalLens] = useState('35mm');
-  const [aspectRatio, setAspectRatio] = useState('2.39:1'); // Anamorphic standard
+  const [aspectRatio, setAspectRatio] = useState('2.39:1');
   const [iso, setIso] = useState(800);
 
   const preset = LIGHTING_PRESETS[presetKey];
@@ -102,30 +89,30 @@ export default function DirectorsSimulator() {
   };
 
   return (
-    <div className="w-full glass-panel rounded-2xl border border-zinc-800/80 overflow-hidden relative shadow-2xl">
-      {/* Top Simulator Header Bar */}
-      <div className="bg-[#0b0b0e] border-b border-zinc-800 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+    <div className="w-full glass-panel rounded-3xl border border-white/10 overflow-hidden relative shadow-2xl">
+      {/* Top Header */}
+      <div className="bg-[#050505] border-b border-white/10 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400">
-            <Camera className="w-5 h-5" />
+          <div className="p-2 rounded-xl bg-zinc-900 border border-white/10 text-white">
+            <Camera className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              3D DIRECTOR'S SUITE & LENS SIMULATOR
+            <h3 className="text-xs font-mono font-bold text-white uppercase tracking-widest flex items-center gap-2">
+              3D DIRECTOR'S TELEMETRY & LENS SIMULATOR
             </h3>
-            <p className="text-xs text-zinc-400">Real-time WebGL Shader & Lighting Engine</p>
+            <p className="text-[11px] text-zinc-500 font-mono">REAL-TIME WEBGL OPTICAL ENGINE</p>
           </div>
         </div>
 
-        {/* HUD Live Stats */}
-        <div className="flex items-center gap-3 text-xs font-mono">
-          <span className="bg-zinc-900 border border-zinc-800 text-amber-400 px-3 py-1 rounded-md">
+        {/* Telemetry Indicators */}
+        <div className="flex items-center gap-3 text-[11px] font-mono">
+          <span className="bg-zinc-900 border border-zinc-800 text-white px-3 py-1 rounded-full">
             LENS: {spec.name}
           </span>
-          <span className="bg-zinc-900 border border-zinc-800 text-emerald-400 px-3 py-1 rounded-md">
+          <span className="bg-zinc-900 border border-zinc-800 text-zinc-300 px-3 py-1 rounded-full">
             IRIS: {spec.iris}
           </span>
-          <span className="bg-zinc-900 border border-zinc-800 text-zinc-300 px-3 py-1 rounded-md">
+          <span className="bg-zinc-900 border border-zinc-800 text-zinc-400 px-3 py-1 rounded-full">
             RATIO: {aspectRatio}
           </span>
         </div>
@@ -133,45 +120,42 @@ export default function DirectorsSimulator() {
 
       {/* Main Viewport Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[480px]">
-        {/* Left Interactive WebGL Canvas Viewport (8 Cols) */}
-        <div className="lg:col-span-8 relative bg-black flex items-center justify-center min-h-[380px] overflow-hidden">
-          {/* Ambient Glow Gradient */}
-          <div className={`absolute inset-0 bg-gradient-to-tr ${preset.bgGlow} transition-all duration-700 pointer-events-none`} />
-
+        {/* Left 3D Viewport (8 Cols) */}
+        <div className="lg:col-span-8 relative bg-[#050505] flex items-center justify-center min-h-[380px] overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10">
           {/* Anamorphic Frame Overlay Grid */}
-          <div className="absolute inset-x-0 top-0 h-10 bg-black/90 border-b border-zinc-800 z-10 flex items-center justify-between px-4 text-[10px] font-mono text-zinc-500">
-            <span>[ANAMORPHIC TOP MATTE]</span>
-            <span>SENSOR: RED V-RAPTOR XL 8K</span>
+          <div className="absolute inset-x-0 top-0 h-8 bg-black/90 border-b border-white/10 z-10 flex items-center justify-between px-4 text-[10px] font-mono text-zinc-500">
+            <span>[TOP MATTE // 2.39:1]</span>
+            <span>SENSOR: ALEXA 35 4.5K OPEN GATE</span>
           </div>
-          <div className="absolute inset-x-0 bottom-0 h-10 bg-black/90 border-t border-zinc-800 z-10 flex items-center justify-between px-4 text-[10px] font-mono text-zinc-500">
-            <span>[ANAMORPHIC BOTTOM MATTE]</span>
-            <span>COLOR SPACE: ACEScg</span>
+          <div className="absolute inset-x-0 bottom-0 h-8 bg-black/90 border-t border-white/10 z-10 flex items-center justify-between px-4 text-[10px] font-mono text-zinc-500">
+            <span>[BOTTOM MATTE // 2.39:1]</span>
+            <span>COLOR SPACE: ACEScg D65</span>
           </div>
 
           <Canvas camera={{ position: [0, 0, 7], fov: spec.fov }} className="w-full h-full">
             <ambientLight intensity={0.6} color={preset.ambient} />
-            <directionalLight position={[6, 6, 6]} intensity={2.5} color={preset.dir1} />
-            <directionalLight position={[-6, -6, -4]} intensity={1.8} color={preset.dir2} />
+            <directionalLight position={[6, 6, 6]} intensity={3.0} color={preset.dir1} />
+            <directionalLight position={[-6, -6, -4]} intensity={1.5} color={preset.dir2} />
 
             <SubjectModel focalLens={focalLens} presetKey={presetKey} />
 
-            <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1.2} />
+            <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1.0} />
           </Canvas>
 
-          {/* Bottom Viewport HUD Crosshairs */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-white/10 rounded-full pointer-events-none flex items-center justify-center">
-            <div className="w-2 h-2 bg-amber-500 rounded-full animate-ping" />
+          {/* Central Target Crosshair */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 border border-white/10 rounded-full pointer-events-none flex items-center justify-center">
+            <div className="w-1.5 h-1.5 bg-white rounded-full" />
           </div>
         </div>
 
         {/* Right Controls Panel (4 Cols) */}
-        <div className="lg:col-span-4 bg-[#0d0d12] border-t lg:border-t-0 lg:border-l border-zinc-800 p-6 flex flex-col justify-between gap-6">
-          {/* Lighting Presets Selector */}
+        <div className="lg:col-span-4 bg-[#0A0A0C] p-6 flex flex-col justify-between gap-6">
+          {/* Lighting Rigs Selector */}
           <div>
-            <label className="text-xs font-mono text-amber-500 uppercase tracking-widest block mb-3 flex items-center gap-2">
-              <Sun className="w-4 h-4" /> LIGHTING SETUP
+            <label className="text-[11px] font-mono text-white uppercase tracking-widest block mb-3 flex items-center gap-2">
+              <Sun className="w-3.5 h-3.5 text-zinc-400" /> LIGHTING RIG PRESET
             </label>
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="space-y-2">
               {Object.keys(LIGHTING_PRESETS).map((key) => {
                 const item = LIGHTING_PRESETS[key];
                 const active = presetKey === key;
@@ -179,42 +163,36 @@ export default function DirectorsSimulator() {
                   <button
                     key={key}
                     onClick={() => handlePresetChange(key)}
-                    className={`p-3 rounded-xl border text-left text-xs font-medium transition-all ${
+                    className={`w-full p-3 rounded-xl border text-left text-xs font-mono transition-all flex items-center justify-between ${
                       active
-                        ? 'border-amber-500 bg-amber-500/10 text-white shadow-lg'
-                        : 'border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
+                        ? 'border-white bg-white/10 text-white font-bold'
+                        : 'border-white/5 bg-zinc-900/50 text-zinc-400 hover:border-white/20 hover:text-white'
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-bold">{item.name}</span>
-                      {active && <Check className="w-3.5 h-3.5 text-amber-500" />}
-                    </div>
-                    <div className="w-full h-1.5 rounded-full overflow-hidden flex mt-2">
-                      <div className="w-1/2 h-full" style={{ backgroundColor: item.dir1 }} />
-                      <div className="w-1/2 h-full" style={{ backgroundColor: item.dir2 }} />
-                    </div>
+                    <span>{item.name}</span>
+                    {active && <Check className="w-4 h-4 text-white" />}
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Focal Length Selector */}
+          {/* Lens Focal Length */}
           <div>
-            <label className="text-xs font-mono text-emerald-400 uppercase tracking-widest block mb-3 flex items-center gap-2">
-              <Aperture className="w-4 h-4" /> LENS OPTICS
+            <label className="text-[11px] font-mono text-white uppercase tracking-widest block mb-3 flex items-center gap-2">
+              <Aperture className="w-3.5 h-3.5 text-zinc-400" /> FOCAL LENGTH
             </label>
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-2 gap-2">
               {Object.keys(LENS_SPECS).map((lens) => {
                 const active = focalLens === lens;
                 return (
                   <button
                     key={lens}
                     onClick={() => handleLensChange(lens)}
-                    className={`p-3 rounded-xl border text-xs font-mono transition-all text-center ${
+                    className={`p-2.5 rounded-xl border text-xs font-mono transition-all text-center ${
                       active
-                        ? 'border-emerald-500 bg-emerald-500/10 text-emerald-300 font-bold shadow-lg'
-                        : 'border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:border-zinc-700'
+                        ? 'border-white bg-white text-black font-bold'
+                        : 'border-white/10 bg-zinc-900/50 text-zinc-400 hover:border-white/20'
                     }`}
                   >
                     {lens}
@@ -224,12 +202,12 @@ export default function DirectorsSimulator() {
             </div>
           </div>
 
-          {/* Aspect Ratio & ISO Toggles */}
+          {/* Aspect Ratio & ISO Controls */}
           <div className="space-y-4">
             <div>
-              <div className="flex items-center justify-between text-xs font-mono mb-2">
+              <div className="flex items-center justify-between text-[11px] font-mono mb-2">
                 <span className="text-zinc-400 flex items-center gap-1.5">
-                  <Layers className="w-3.5 h-3.5 text-amber-500" /> ASPECT RATIO
+                  <Layers className="w-3.5 h-3.5" /> ASPECT RATIO
                 </span>
                 <span className="text-white font-bold">{aspectRatio}</span>
               </div>
@@ -241,10 +219,10 @@ export default function DirectorsSimulator() {
                       playClick();
                       setAspectRatio(ratio);
                     }}
-                    className={`py-1.5 rounded border text-xs font-mono transition-all ${
+                    className={`py-1.5 rounded-lg border text-xs font-mono transition-all ${
                       aspectRatio === ratio
-                        ? 'border-amber-500 bg-amber-500/20 text-amber-400 font-bold'
-                        : 'border-zinc-800 bg-zinc-900 text-zinc-400'
+                        ? 'border-white bg-white/20 text-white font-bold'
+                        : 'border-white/10 bg-zinc-900 text-zinc-500'
                     }`}
                   >
                     {ratio}
@@ -254,9 +232,9 @@ export default function DirectorsSimulator() {
             </div>
 
             <div>
-              <div className="flex items-center justify-between text-xs font-mono mb-2">
+              <div className="flex items-center justify-between text-[11px] font-mono mb-2">
                 <span className="text-zinc-400">SENSOR ISO</span>
-                <span className="text-amber-400 font-bold">ISO {iso}</span>
+                <span className="text-white font-bold">ISO {iso}</span>
               </div>
               <input
                 type="range"
@@ -265,12 +243,12 @@ export default function DirectorsSimulator() {
                 step="100"
                 value={iso}
                 onChange={(e) => setIso(Number(e.target.value))}
-                className="w-full accent-amber-500 bg-zinc-800 h-1.5 rounded-lg cursor-pointer"
+                className="w-full accent-white bg-zinc-800 h-1.5 rounded-lg cursor-pointer"
               />
             </div>
           </div>
 
-          {/* Reset / Live Feedback */}
+          {/* Reset Action */}
           <button
             onClick={() => {
               playClick();
@@ -279,9 +257,9 @@ export default function DirectorsSimulator() {
               setAspectRatio('2.39:1');
               setIso(800);
             }}
-            className="w-full py-2.5 rounded-xl border border-zinc-800 bg-zinc-900/80 hover:bg-zinc-800 text-zinc-400 text-xs font-mono flex items-center justify-center gap-2 transition-all"
+            className="w-full py-2.5 rounded-xl border border-white/10 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 text-xs font-mono flex items-center justify-center gap-2 transition-all"
           >
-            <RefreshCw className="w-3.5 h-3.5" /> RESET SIMULATOR PARAMETERS
+            <RefreshCw className="w-3.5 h-3.5" /> RESET PARAMETERS
           </button>
         </div>
       </div>

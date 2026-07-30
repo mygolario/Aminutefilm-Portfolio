@@ -3,98 +3,77 @@
 @layer base {
   :root {
     --bg-noir: #050505;
-    --accent-amber: #F59E0B;
-    --accent-emerald: #10B981;
-    --accent-violet: #8B5CF6;
-    --text-primary: #F9FAFB;
-    --text-secondary: #9CA3AF;
+    --bg-card: #0A0A0C;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.16);
+    --text-primary: #FFFFFF;
+    --text-muted: #8E8E93;
+    --accent-gold: #F59E0B;
   }
 
   body {
     background-color: var(--bg-noir);
     color: var(--text-primary);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
-    selection-background-color: #F59E0B;
-    selection-color: #000000;
+    selection-background-color: #FFFFFF;
+    selection-color: #050505;
   }
 }
 
-/* Kinetic Dot-Matrix Canvas Pattern inspired by dotmatrix.zzzzshawn.cloud & Aceternity */
-.bg-dot-matrix {
-  background-image: radial-gradient(rgba(245, 158, 11, 0.15) 1px, transparent 1px);
-  background-size: 24px 24px;
+/* Hairline Grid & Dot Matrix Patterns */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-.bg-dot-matrix-dense {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-  background-size: 14px 14px;
+.bg-dot-telemetry {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 16px 16px;
 }
 
-/* Glassmorphism & UI Accents inspired by HeroUI & Magic UI Pro */
+/* Bespoke Cyber-Luxe Glassmorphic Panels */
 .glass-panel {
-  background: rgba(15, 15, 18, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(10, 10, 12, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 
-.glass-panel-amber {
-  background: rgba(245, 158, 11, 0.04);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  box-shadow: 0 0 25px rgba(245, 158, 11, 0.15);
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-panel-hover:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(18, 18, 22, 0.85);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
 }
 
-.glass-panel-emerald {
-  background: rgba(16, 185, 129, 0.04);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  box-shadow: 0 0 25px rgba(16, 185, 129, 0.15);
+/* Custom Cinema Viewport Overlay Hairline Frame */
+.cinema-frame-border {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
-/* Glowing text & anamorphic lens flare simulation */
-.text-glow-amber {
-  text-shadow: 0 0 20px rgba(245, 158, 11, 0.6), 0 0 40px rgba(245, 158, 11, 0.3);
+/* Precise Hairline Accent */
+.hairline-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
 }
 
-.text-glow-emerald {
-  text-shadow: 0 0 20px rgba(16, 185, 129, 0.6), 0 0 40px rgba(16, 185, 129, 0.3);
-}
-
-.glow-box-amber {
-  box-shadow: 0 0 30px rgba(245, 158, 11, 0.25);
-}
-
-/* Anamorphic Lens Flare Line */
-.anamorphic-flare {
-  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.8), rgba(255, 255, 255, 0.9), rgba(245, 158, 11, 0.8), transparent);
-  height: 2px;
-  filter: blur(0.5px);
-}
-
-/* Custom Scrollbar */
+/* Custom Minimal Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #050505;
 }
 ::-webkit-scrollbar-thumb {
-  background: #262626;
-  border-radius: 4px;
+  background: #27272A;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #F59E0B;
+  background: #52525B;
 }
 
-/* Shimmer animation */
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-.animate-shimmer {
-  animation: shimmer 2.5s infinite;
-}

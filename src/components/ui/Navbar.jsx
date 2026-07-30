@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Volume2, VolumeX, Film, Sparkles, Sliders, Send } from 'lucide-react';
+import { Volume2, VolumeX, ArrowUpRight } from 'lucide-react';
 import { toggleGlobalAudio, playClick, startCinemaHum, stopCinemaHum } from '../../utils/audioSystem';
 
 export default function Navbar({ onOpenBooking }) {
@@ -24,51 +24,51 @@ export default function Navbar({ onOpenBooking }) {
   };
 
   return (
-    <header className="fixed top-4 inset-x-0 z-40 px-4 pointer-events-none">
-      <div className="max-w-6xl mx-auto glass-panel rounded-2xl border border-zinc-800/80 px-5 py-3 flex items-center justify-between pointer-events-auto shadow-2xl backdrop-blur-xl">
+    <header className="fixed top-6 inset-x-0 z-40 px-4 pointer-events-none">
+      <div className="max-w-6xl mx-auto glass-panel rounded-full border border-white/10 px-6 py-3 flex items-center justify-between pointer-events-auto shadow-2xl backdrop-blur-2xl">
         {/* Brand Logo */}
         <button
           onClick={() => scrollToSection('hero')}
           className="flex items-center gap-3 group text-left"
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-black font-black font-mono text-base shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+          <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black font-extrabold font-mono text-xs tracking-tighter group-hover:scale-105 transition-transform">
             1M
           </div>
           <div>
-            <span className="text-sm font-bold text-white font-serif tracking-wider block">
+            <span className="text-xs font-bold text-white tracking-widest uppercase block font-mono">
               A MINUTE FILM
             </span>
-            <span className="text-[10px] text-amber-500/90 font-mono tracking-widest block -mt-0.5">
-              3D CINEMA STUDIO
+            <span className="text-[9px] text-zinc-400 font-mono tracking-widest block -mt-0.5">
+              3D CINEMATOGRAPHY
             </span>
           </div>
         </button>
 
         {/* Desktop Links */}
-        <nav className="hidden md:flex items-center gap-7 text-xs font-mono text-zinc-400">
+        <nav className="hidden md:flex items-center gap-8 text-[11px] font-mono text-zinc-400">
           <button
             onClick={() => scrollToSection('reel')}
-            className="hover:text-amber-400 transition-colors uppercase tracking-wider"
+            className="hover:text-white transition-colors uppercase tracking-widest"
           >
-            01. THE REEL
+            [01] THE REEL
           </button>
           <button
             onClick={() => scrollToSection('simulator')}
-            className="hover:text-amber-400 transition-colors uppercase tracking-wider"
+            className="hover:text-white transition-colors uppercase tracking-widest"
           >
-            02. 3D SIMULATOR
+            [02] 3D SIMULATOR
           </button>
           <button
             onClick={() => scrollToSection('process')}
-            className="hover:text-amber-400 transition-colors uppercase tracking-wider"
+            className="hover:text-white transition-colors uppercase tracking-widest"
           >
-            03. PROCESS
+            [03] PROCESS
           </button>
           <button
             onClick={() => scrollToSection('estimator')}
-            className="hover:text-amber-400 transition-colors uppercase tracking-wider"
+            className="hover:text-white transition-colors uppercase tracking-widest"
           >
-            04. ESTIMATOR
+            [04] ESTIMATOR
           </button>
         </nav>
 
@@ -77,21 +77,21 @@ export default function Navbar({ onOpenBooking }) {
           {/* Audio Synthesizer Toggle */}
           <button
             onClick={handleAudioToggle}
-            className={`p-2.5 rounded-xl border text-xs font-mono flex items-center gap-2 transition-all ${
+            className={`p-2 rounded-full border text-[10px] font-mono flex items-center gap-2 transition-all ${
               !audioMuted
-                ? 'bg-amber-500/20 border-amber-500/50 text-amber-400 font-bold shadow-lg shadow-amber-500/10'
-                : 'bg-zinc-900/80 border-zinc-800 text-zinc-500 hover:text-zinc-300'
+                ? 'bg-white/10 border-white/40 text-white font-bold'
+                : 'bg-zinc-900 border-zinc-800 text-zinc-500 hover:text-zinc-300'
             }`}
             title="Toggle Ambient Audio & Sound Synthesizer"
           >
             {!audioMuted ? (
               <>
-                <Volume2 className="w-4 h-4 text-amber-400 animate-pulse" />
+                <Volume2 className="w-3.5 h-3.5 text-white animate-pulse" />
                 <span className="hidden sm:inline">AUDIO: ON</span>
               </>
             ) : (
               <>
-                <VolumeX className="w-4 h-4" />
+                <VolumeX className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">AUDIO: OFF</span>
               </>
             )}
@@ -103,10 +103,10 @@ export default function Navbar({ onOpenBooking }) {
               playClick();
               onOpenBooking();
             }}
-            className="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-mono font-bold tracking-wider uppercase flex items-center gap-2 transition-all shadow-lg shadow-amber-500/20 hover:scale-105"
+            className="px-5 py-2 rounded-full bg-white hover:bg-zinc-200 text-black text-[11px] font-mono font-bold tracking-widest uppercase flex items-center gap-2 transition-all hover:scale-105 shadow-lg"
           >
-            <Send className="w-3.5 h-3.5" />
-            <span>BOOK DIRECTORS</span>
+            <span>BOOK PRODUCTION</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
