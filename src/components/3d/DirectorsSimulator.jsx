@@ -89,9 +89,9 @@ export default function DirectorsSimulator() {
   };
 
   return (
-    <div className="w-full glass-panel rounded-3xl border border-white/10 overflow-hidden relative shadow-2xl">
+    <div className="w-full glass-slate rounded-3xl border border-white/10 overflow-hidden relative shadow-2xl">
       {/* Top Header */}
-      <div className="bg-[#050505] border-b border-white/10 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-[#060608] border-b border-white/10 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-xl bg-zinc-900 border border-white/10 text-white">
             <Camera className="w-4 h-4" />
@@ -106,13 +106,13 @@ export default function DirectorsSimulator() {
 
         {/* Telemetry Indicators */}
         <div className="flex items-center gap-3 text-[11px] font-mono">
-          <span className="bg-zinc-900 border border-zinc-800 text-white px-3 py-1 rounded-full">
+          <span className="bg-zinc-900/90 border border-zinc-800 text-white px-3 py-1 rounded-full">
             LENS: {spec.name}
           </span>
-          <span className="bg-zinc-900 border border-zinc-800 text-zinc-300 px-3 py-1 rounded-full">
+          <span className="bg-zinc-900/90 border border-zinc-800 text-zinc-300 px-3 py-1 rounded-full">
             IRIS: {spec.iris}
           </span>
-          <span className="bg-zinc-900 border border-zinc-800 text-zinc-400 px-3 py-1 rounded-full">
+          <span className="bg-zinc-900/90 border border-zinc-800 text-zinc-400 px-3 py-1 rounded-full">
             RATIO: {aspectRatio}
           </span>
         </div>
@@ -121,14 +121,18 @@ export default function DirectorsSimulator() {
       {/* Main Viewport Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[480px]">
         {/* Left 3D Viewport (8 Cols) */}
-        <div className="lg:col-span-8 relative bg-[#050505] flex items-center justify-center min-h-[380px] overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10">
+        <div
+          data-cursor="magnetic"
+          data-cursor-text="ROTATE 3D"
+          className="lg:col-span-8 relative bg-[#060608] flex items-center justify-center min-h-[380px] overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10"
+        >
           {/* Anamorphic Frame Overlay Grid */}
-          <div className="absolute inset-x-0 top-0 h-8 bg-black/90 border-b border-white/10 z-10 flex items-center justify-between px-4 text-[10px] font-mono text-zinc-500">
-            <span>[TOP MATTE // 2.39:1]</span>
+          <div className="absolute inset-x-0 top-0 h-8 bg-black/90 backdrop-blur-md border-b border-white/10 z-10 flex items-center justify-between px-4 text-[10px] font-mono text-zinc-500">
+            <span>[TOP MATTE // {aspectRatio}]</span>
             <span>SENSOR: ALEXA 35 4.5K OPEN GATE</span>
           </div>
-          <div className="absolute inset-x-0 bottom-0 h-8 bg-black/90 border-t border-white/10 z-10 flex items-center justify-between px-4 text-[10px] font-mono text-zinc-500">
-            <span>[BOTTOM MATTE // 2.39:1]</span>
+          <div className="absolute inset-x-0 bottom-0 h-8 bg-black/90 backdrop-blur-md border-t border-white/10 z-10 flex items-center justify-between px-4 text-[10px] font-mono text-zinc-500">
+            <span>[BOTTOM MATTE // {aspectRatio}]</span>
             <span>COLOR SPACE: ACEScg D65</span>
           </div>
 
@@ -149,7 +153,7 @@ export default function DirectorsSimulator() {
         </div>
 
         {/* Right Controls Panel (4 Cols) */}
-        <div className="lg:col-span-4 bg-[#0A0A0C] p-6 flex flex-col justify-between gap-6">
+        <div className="lg:col-span-4 bg-[#0a0a0d] p-6 flex flex-col justify-between gap-6">
           {/* Lighting Rigs Selector */}
           <div>
             <label className="text-[11px] font-mono text-white uppercase tracking-widest block mb-3 flex items-center gap-2">
@@ -163,6 +167,7 @@ export default function DirectorsSimulator() {
                   <button
                     key={key}
                     onClick={() => handlePresetChange(key)}
+                    data-cursor="hover"
                     className={`w-full p-3 rounded-xl border text-left text-xs font-mono transition-all flex items-center justify-between ${
                       active
                         ? 'border-white bg-white/10 text-white font-bold'
@@ -189,6 +194,7 @@ export default function DirectorsSimulator() {
                   <button
                     key={lens}
                     onClick={() => handleLensChange(lens)}
+                    data-cursor="hover"
                     className={`p-2.5 rounded-xl border text-xs font-mono transition-all text-center ${
                       active
                         ? 'border-white bg-white text-black font-bold'
@@ -219,6 +225,7 @@ export default function DirectorsSimulator() {
                       playClick();
                       setAspectRatio(ratio);
                     }}
+                    data-cursor="hover"
                     className={`py-1.5 rounded-lg border text-xs font-mono transition-all ${
                       aspectRatio === ratio
                         ? 'border-white bg-white/20 text-white font-bold'
@@ -257,6 +264,7 @@ export default function DirectorsSimulator() {
               setAspectRatio('2.39:1');
               setIso(800);
             }}
+            data-cursor="hover"
             className="w-full py-2.5 rounded-xl border border-white/10 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 text-xs font-mono flex items-center justify-center gap-2 transition-all"
           >
             <RefreshCw className="w-3.5 h-3.5" /> RESET PARAMETERS
@@ -266,3 +274,4 @@ export default function DirectorsSimulator() {
     </div>
   );
 }
+

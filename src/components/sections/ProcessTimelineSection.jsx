@@ -48,18 +48,18 @@ export default function ProcessTimelineSection() {
   const currentStep = PROCESS_STEPS[activeStep];
 
   return (
-    <section id="process" className="py-28 px-4 relative bg-[#050505] border-t border-white/10">
-      <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+    <section id="process" className="py-32 px-4 md:px-8 relative bg-[#060608] border-t border-white/10">
+      <div className="max-w-7xl mx-auto space-y-14 relative z-10">
         {/* Section Header */}
         <div className="space-y-3 text-left font-mono">
           <div className="inline-flex items-center gap-2 text-xs text-zinc-400 uppercase tracking-widest">
             <Layers className="w-4 h-4 text-white" />
-            <span>MODULE 03 // STORYTELLING JOURNEY</span>
+            <span>MODULE 03 // PRODUCTION SYSTEM</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase">
-            PRODUCTION BLUEPRINT
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase font-sans">
+            THE PRODUCTION BLUEPRINT
           </h2>
-          <p className="text-sm text-zinc-400 max-w-xl font-sans">
+          <p className="text-sm text-zinc-400 max-w-xl font-light leading-relaxed">
             Our systematic 4-phase production operating system for creating high-impact 3D cinema assets.
           </p>
         </div>
@@ -75,17 +75,18 @@ export default function ProcessTimelineSection() {
                   playClick();
                   setActiveStep(idx);
                 }}
+                data-cursor="hover"
                 className={`p-6 rounded-2xl border text-left transition-all relative overflow-hidden font-mono ${
                   active
                     ? 'bg-zinc-900 border-white text-white shadow-xl'
-                    : 'bg-zinc-950 border-white/10 text-zinc-500 hover:border-white/20 hover:text-zinc-300'
+                    : 'glass-slate border-white/10 text-zinc-500 hover:border-white/20 hover:text-zinc-300'
                 }`}
               >
                 <div className="flex items-center justify-between mb-4">
                   <span className={`text-2xl font-black ${active ? 'text-white' : 'text-zinc-600'}`}>
                     {item.step}
                   </span>
-                  <span className="text-[10px] text-zinc-500 uppercase">{item.duration}</span>
+                  <span className="text-[10px] text-zinc-500 uppercase font-mono">{item.duration}</span>
                 </div>
                 <h4 className="text-xs font-bold tracking-wider uppercase">
                   {item.title}
@@ -98,10 +99,10 @@ export default function ProcessTimelineSection() {
         {/* Active Step Highlight Card */}
         <motion.div
           key={currentStep.step}
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="glass-panel rounded-3xl border border-white/10 p-8 sm:p-10 shadow-2xl relative overflow-hidden"
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="glass-slate rounded-3xl border border-white/10 p-8 sm:p-10 shadow-2xl relative overflow-hidden"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center font-mono">
             <div className="lg:col-span-8 space-y-4">
@@ -109,11 +110,11 @@ export default function ProcessTimelineSection() {
                 PHASE {currentStep.step} // {currentStep.subtitle.toUpperCase()}
               </div>
 
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight uppercase">
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight uppercase font-sans">
                 {currentStep.title}
               </h3>
 
-              <p className="text-sm text-zinc-400 leading-relaxed font-sans max-w-2xl">
+              <p className="text-sm text-zinc-400 leading-relaxed font-light max-w-2xl">
                 {currentStep.desc}
               </p>
 
@@ -125,10 +126,10 @@ export default function ProcessTimelineSection() {
               </div>
             </div>
 
-            <div className="lg:col-span-4 bg-zinc-900 border border-white/10 p-6 rounded-2xl space-y-3">
+            <div className="lg:col-span-4 bg-zinc-900/90 border border-white/10 p-6 rounded-2xl space-y-3">
               <span className="text-[10px] text-zinc-500 uppercase block">QUALITY BENCHMARK</span>
               <span className="text-2xl font-black text-white block">{currentStep.stat}</span>
-              <p className="text-[11px] text-zinc-400 leading-relaxed">
+              <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
                 Guaranteed studio standard verified across all 60-second agency projects.
               </p>
             </div>
@@ -138,3 +139,4 @@ export default function ProcessTimelineSection() {
     </section>
   );
 }
+

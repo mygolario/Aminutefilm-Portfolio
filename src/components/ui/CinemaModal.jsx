@@ -31,13 +31,13 @@ export default function CinemaModal({ film, isOpen, onClose }) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-5xl bg-[#0A0A0C] border border-white/10 rounded-3xl overflow-hidden shadow-2xl z-10 glass-panel"
+          className="relative w-full max-w-5xl bg-[#060608] border border-white/10 rounded-3xl overflow-hidden shadow-2xl z-10 glass-slate"
         >
           {/* Top Bar Header */}
-          <div className="bg-[#050505] px-6 py-4 border-b border-white/10 flex items-center justify-between font-mono">
+          <div className="bg-[#08080b] px-6 py-4 border-b border-white/10 flex items-center justify-between font-mono">
             <div className="flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-              <span className="text-xs text-white uppercase tracking-widest">
+              <span className="text-xs text-white uppercase tracking-widest font-semibold">
                 CINEMA MASTER SHOWCASE // {film.category}
               </span>
             </div>
@@ -47,6 +47,7 @@ export default function CinemaModal({ film, isOpen, onClose }) {
                 playClick();
                 onClose();
               }}
+              data-cursor="hover"
               className="p-2 rounded-full bg-zinc-900 border border-white/10 hover:bg-white hover:text-black text-white transition-all"
             >
               <X className="w-4 h-4" />
@@ -60,7 +61,7 @@ export default function CinemaModal({ film, isOpen, onClose }) {
               alt={film.title}
               className="w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0C] via-transparent to-black/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#060608] via-transparent to-black/40" />
 
             {/* Video Controls HUD Overlay */}
             <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between z-20 font-mono">
@@ -70,12 +71,13 @@ export default function CinemaModal({ film, isOpen, onClose }) {
                     playClick();
                     setIsPlaying(!isPlaying);
                   }}
-                  className="p-3.5 rounded-full bg-white text-black hover:bg-zinc-200 transition-all font-bold"
+                  data-cursor="hover"
+                  className="p-3.5 rounded-full bg-white text-black hover:bg-zinc-200 transition-all font-bold shadow-lg"
                 >
                   {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
                 </button>
                 <div>
-                  <h3 className="text-lg font-extrabold text-white tracking-wide uppercase">{film.title}</h3>
+                  <h3 className="text-lg font-extrabold text-white tracking-wide uppercase font-sans">{film.title}</h3>
                   <p className="text-xs text-zinc-400">RUNTIME: {film.duration} // RED V-RAPTOR 8K</p>
                 </div>
               </div>
@@ -86,7 +88,8 @@ export default function CinemaModal({ film, isOpen, onClose }) {
                     playClick();
                     setIsMuted(!isMuted);
                   }}
-                  className="p-2.5 rounded-full bg-black/80 border border-white/10 text-white hover:border-white"
+                  data-cursor="hover"
+                  className="p-2.5 rounded-full bg-black/80 backdrop-blur-md border border-white/10 text-white hover:border-white"
                 >
                   {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                 </button>
@@ -95,7 +98,7 @@ export default function CinemaModal({ film, isOpen, onClose }) {
           </div>
 
           {/* Tab Navigation */}
-          <div className="px-6 py-3 bg-[#050505] border-b border-white/10 flex items-center gap-4 text-xs font-mono">
+          <div className="px-6 py-3 bg-[#08080b] border-b border-white/10 flex items-center gap-4 text-xs font-mono">
             {[
               { id: 'overview', label: 'OVERVIEW & CONCEPT', icon: Sparkles },
               { id: 'breakdown', label: 'SHOT BREAKDOWN', icon: Layers },
@@ -110,9 +113,10 @@ export default function CinemaModal({ film, isOpen, onClose }) {
                     playClick();
                     setActiveTab(tab.id);
                   }}
+                  data-cursor="hover"
                   className={`flex items-center gap-2 py-1.5 px-3 rounded-full transition-all ${
                     active
-                      ? 'bg-white text-black font-bold'
+                      ? 'bg-white text-black font-semibold'
                       : 'text-zinc-400 hover:text-white'
                   }`}
                 >
@@ -128,15 +132,15 @@ export default function CinemaModal({ film, isOpen, onClose }) {
             {activeTab === 'overview' && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="md:col-span-2 space-y-4">
-                  <p className="text-sm text-zinc-300 leading-relaxed font-sans">
+                  <p className="text-sm text-zinc-300 leading-relaxed font-light">
                     {film.description}
                   </p>
-                  <div className="p-4 rounded-2xl bg-zinc-900 border border-white/10 text-xs text-zinc-300 font-mono italic">
+                  <div className="p-4 rounded-2xl bg-zinc-900/80 border border-white/10 text-xs text-zinc-300 font-mono italic">
                     "{film.quote}" — Director's Note
                   </div>
                 </div>
 
-                <div className="space-y-3 bg-zinc-900 border border-white/10 p-4 rounded-2xl text-xs font-mono">
+                <div className="space-y-3 bg-zinc-900/80 border border-white/10 p-4 rounded-2xl text-xs font-mono">
                   <div className="flex items-center gap-2 text-white font-bold mb-2 uppercase">
                     <Award className="w-4 h-4 text-white" /> RECOGNITION
                   </div>
@@ -159,10 +163,10 @@ export default function CinemaModal({ film, isOpen, onClose }) {
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {film.breakdown.map((item, idx) => (
-                    <div key={idx} className="p-4 rounded-2xl bg-zinc-900 border border-white/10 space-y-2">
+                    <div key={idx} className="p-4 rounded-2xl bg-zinc-900/80 border border-white/10 space-y-2">
                       <span className="text-xs text-zinc-400 font-bold">{item.timecode}</span>
                       <h5 className="text-xs font-bold text-white uppercase">{item.title}</h5>
-                      <p className="text-xs text-zinc-400 leading-relaxed font-sans">{item.desc}</p>
+                      <p className="text-xs text-zinc-400 leading-relaxed font-light">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -171,19 +175,19 @@ export default function CinemaModal({ film, isOpen, onClose }) {
 
             {activeTab === 'specs' && (
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-mono">
-                <div className="p-4 rounded-2xl bg-zinc-900 border border-white/10">
+                <div className="p-4 rounded-2xl bg-zinc-900/80 border border-white/10">
                   <span className="text-zinc-500 block mb-1">CAMERA SYSTEM</span>
                   <span className="text-white font-bold">{film.specs.camera}</span>
                 </div>
-                <div className="p-4 rounded-2xl bg-zinc-900 border border-white/10">
+                <div className="p-4 rounded-2xl bg-zinc-900/80 border border-white/10">
                   <span className="text-zinc-500 block mb-1">LENS GLASS</span>
                   <span className="text-white font-bold">{film.specs.lens}</span>
                 </div>
-                <div className="p-4 rounded-2xl bg-zinc-900 border border-white/10">
+                <div className="p-4 rounded-2xl bg-zinc-900/80 border border-white/10">
                   <span className="text-zinc-500 block mb-1">COLOR WORKFLOW</span>
                   <span className="text-white font-bold">{film.specs.color}</span>
                 </div>
-                <div className="p-4 rounded-2xl bg-zinc-900 border border-white/10">
+                <div className="p-4 rounded-2xl bg-zinc-900/80 border border-white/10">
                   <span className="text-zinc-500 block mb-1">FPS / SHUTTER</span>
                   <span className="text-white font-bold">{film.specs.fps}</span>
                 </div>
@@ -195,3 +199,4 @@ export default function CinemaModal({ film, isOpen, onClose }) {
     </AnimatePresence>
   );
 }
+

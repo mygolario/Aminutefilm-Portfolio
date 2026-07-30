@@ -1,7 +1,46 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, MeshTransmissionMaterial, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
+
+function DustParticles({ count = 80 }) {
+  const pointsRef = useRef();
+
+  const [positions, scales] = useMemo(() => {
+    const pos = new Float32Array(count * 3);
+    const scl = new Float32Array(count);
+    for (let i = 0; i < count; i++) {
+      pos[i * 3] = (Math.random() - 0.5) * 12;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 12;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 8;
+      scl[i] = Math.random() * 0.04 + 0.01;
+    }
+    return [pos, scl];
+  }, [count]);
+
+  useFrame((state, delta) => {
+    if (pointsRef.current) {
+      pointsRef.current.rotation.y += delta * 0.02;
+      pointsRef.current.rotation.x += delta * 0.01;
+    }
+  });
+
+  return (
+    <points ref={pointsRef}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+        <bufferAttribute attach="attributes-scale" args={[scales, 1]} />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.05}
+        color="#ffffff"
+        transparent
+        opacity={0.35}
+        blending={THREE.AdditiveBlending}
+      />
+    </points>
+  );
+}
 
 function LensAssembly({ mousePos }) {
   const groupRef = useRef();
@@ -11,21 +50,20 @@ function LensAssembly({ mousePos }) {
 
   useFrame((state, delta) => {
     if (groupRef.current) {
-      const targetX = (mousePos.y * 0.35);
-      const targetY = (mousePos.x * 0.35);
-      groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetX, 0.06);
-      groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetY, 0.06);
+      const targetX = mousePos.y * 0.4;
+      const targetY = mousePos.x * 0.4;
+      groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetX, 0.07);
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetY, 0.07);
     }
     if (outerRingRef.current) {
-      outerRingRef.current.rotation.z += delta * 0.12;
+      outerRingRef.current.rotation.z += delta * 0.15;
     }
     if (innerElementRef.current) {
-      innerElementRef.current.rotation.z -= delta * 0.18;
+      innerElementRef.current.rotation.z -= delta * 0.2;
     }
     if (apertureGroupRef.current) {
-      // Subtle iris blade movement simulation
       const time = state.clock.getElapsedTime();
-      apertureGroupRef.current.rotation.z = Math.sin(time * 0.8) * 0.15;
+      apertureGroupRef.current.rotation.z = Math.sin(time * 0.9) * 0.18;
     }
   });
 
@@ -33,9 +71,9 @@ function LensAssembly({ mousePos }) {
     <group ref={groupRef} position={[0, 0, 0]}>
       {/* Titanium Anodized Outer Lens Barrel */}
       <mesh ref={outerRingRef} position={[0, 0, 0]}>
-        <cylinderGeometry args={[2.5, 2.5, 0.9, 64, 1, true]} />
+        <cylinderGeometry args={[2.5, 2.5, 0.95, 64, 1, true]} />
         <meshStandardMaterial
-          color="#121215"
+          color="#0e0e12"
           metalness={0.98}
           roughness={0.12}
           side={THREE.DoubleSide}
@@ -43,32 +81,32 @@ function LensAssembly({ mousePos }) {
       </mesh>
 
       {/* Hairline Chrome Focus Ring */}
-      <mesh position={[0, 0, 0.45]}>
-        <torusGeometry args={[2.52, 0.04, 24, 120]} />
+      <mesh position={[0, 0, 0.48]}>
+        <torusGeometry args={[2.52, 0.035, 24, 120]} />
         <meshStandardMaterial
-          color="#E4E4E7"
+          color="#f4f4f5"
           metalness={0.95}
-          roughness={0.08}
+          roughness={0.05}
         />
       </mesh>
 
       {/* Front Optical Convex Glass Element */}
-      <mesh ref={innerElementRef} position={[0, 0, 0.15]}>
-        <sphereGeometry args={[2.2, 64, 64, 0, Math.PI * 2, 0, Math.PI * 0.42]} />
+      <mesh ref={innerElementRef} position={[0, 0, 0.18]}>
+        <sphereGeometry args={[2.22, 64, 64, 0, Math.PI * 2, 0, Math.PI * 0.42]} />
         <MeshTransmissionMaterial
           backside
           samples={16}
           resolution={512}
           transmission={0.98}
-          roughness={0.03}
+          roughness={0.02}
           clearcoat={1}
-          clearcoatRoughness={0.05}
-          thickness={0.7}
-          ior={1.62}
-          chromaticAberration={0.08}
-          anisotropy={0.2}
-          distortion={0.15}
-          color="#FFFFFF"
+          clearcoatRoughness={0.03}
+          thickness={0.75}
+          ior={1.65}
+          chromaticAberration={0.09}
+          anisotropy={0.25}
+          distortion={0.18}
+          color="#ffffff"
         />
       </mesh>
 
@@ -84,19 +122,19 @@ function LensAssembly({ mousePos }) {
               0,
             ]}
           >
-            <planeGeometry args={[1.3, 0.35]} />
-            <meshStandardMaterial color="#0A0A0C" metalness={0.9} roughness={0.2} />
+            <planeGeometry args={[1.35, 0.38]} />
+            <meshStandardMaterial color="#060608" metalness={0.95} roughness={0.15} />
           </mesh>
         ))}
       </group>
 
       {/* Internal Monochromatic Coated Rear Element */}
-      <mesh position={[0, 0, -0.45]}>
-        <cylinderGeometry args={[1.6, 1.6, 0.1, 32]} />
+      <mesh position={[0, 0, -0.48]}>
+        <cylinderGeometry args={[1.65, 1.65, 0.1, 32]} />
         <meshStandardMaterial
-          color="#050505"
-          metalness={0.9}
-          roughness={0.1}
+          color="#060608"
+          metalness={0.92}
+          roughness={0.08}
         />
       </mesh>
     </group>
@@ -105,21 +143,23 @@ function LensAssembly({ mousePos }) {
 
 export default function CameraLensScene({ mousePos = { x: 0, y: 0 } }) {
   return (
-    <div className="w-full h-full min-h-[440px] relative flex items-center justify-center">
-      {/* Subtle depth lighting background */}
-      <div className="absolute w-72 h-72 rounded-full bg-white/5 blur-[100px] pointer-events-none" />
+    <div className="w-full h-full min-h-[460px] relative flex items-center justify-center">
+      {/* Dynamic Backlight Halo */}
+      <div className="absolute w-80 h-80 rounded-full bg-white/5 blur-[110px] pointer-events-none" />
 
       <Canvas
         camera={{ position: [0, 0, 6.2], fov: 42 }}
         gl={{ antialias: true, alpha: true }}
         className="w-full h-full pointer-events-auto"
       >
-        <ambientLight intensity={0.8} />
-        <directionalLight position={[6, 8, 6]} intensity={3.0} color="#FFFFFF" />
-        <directionalLight position={[-6, -6, -3]} intensity={1.5} color="#A1A1AA" />
-        <pointLight position={[0, 0, 3]} intensity={1.2} color="#FFFFFF" />
+        <ambientLight intensity={0.9} />
+        <directionalLight position={[6, 8, 6]} intensity={3.2} color="#ffffff" />
+        <directionalLight position={[-6, -6, -3]} intensity={1.8} color="#a1a1aa" />
+        <pointLight position={[0, 0, 3.5]} intensity={1.4} color="#ffffff" />
 
-        <Float speed={1.8} rotationIntensity={0.3} floatIntensity={0.4}>
+        <DustParticles count={90} />
+
+        <Float speed={1.8} rotationIntensity={0.25} floatIntensity={0.35}>
           <LensAssembly mousePos={mousePos} />
         </Float>
 
@@ -128,3 +168,4 @@ export default function CameraLensScene({ mousePos = { x: 0, y: 0 } }) {
     </div>
   );
 }
+

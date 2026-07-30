@@ -9,8 +9,11 @@ import ProjectEstimatorSection from './components/sections/ProjectEstimatorSecti
 import Footer from './components/ui/Footer';
 import CinemaModal from './components/ui/CinemaModal';
 import BookingModal from './components/ui/BookingModal';
+import LoadingSequence from './components/ui/LoadingSequence';
+import CustomCursor from './components/ui/CustomCursor';
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedFilm, setSelectedFilm] = useState(null);
   const [isCinemaOpen, setIsCinemaOpen] = useState(false);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
@@ -36,11 +39,17 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white selection:bg-amber-500 selection:text-black">
+    <div className="min-h-screen bg-[#060608] text-white selection:bg-white selection:text-black relative">
+      {/* Cinematic 24fps Loading Sequence */}
+      {isLoading && <LoadingSequence onComplete={() => setIsLoading(false)} />}
+
+      {/* Dual-Layer Spring-Dampened Custom Cursor & Spotlight */}
+      <CustomCursor />
+
       {/* Top Kinetic Dot-Matrix Telemetry Ticker */}
       <DotMatrixBanner />
 
-      {/* Floating Glassmorphic Navbar */}
+      {/* Floating Architectural Glassmorphic Navbar */}
       <Navbar onOpenBooking={() => handleOpenBooking()} />
 
       {/* Main Content Sections */}
@@ -77,3 +86,4 @@ export default function App() {
     </div>
   );
 }
+

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Film, Play, Award, ArrowUpRight } from 'lucide-react';
+import { Film, Play, Award, ArrowUpRight, Sparkles } from 'lucide-react';
 import { playClick } from '../../utils/audioSystem';
 
 export const REEL_DATA = [
@@ -104,25 +104,25 @@ export default function ReelMatrixSection({ onSelectFilm }) {
     : REEL_DATA.filter((f) => f.category === activeFilter);
 
   return (
-    <section id="reel" className="py-28 px-4 relative bg-[#050505] border-t border-white/10">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <section id="reel" className="py-32 px-4 md:px-8 relative bg-[#060608] border-t border-white/10">
+      <div className="max-w-7xl mx-auto space-y-14">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-3">
             <div className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400 uppercase tracking-widest">
               <Film className="w-4 h-4 text-white" />
-              <span>MODULE 01 // SHOWCASE MATRIX</span>
+              <span>MODULE 01 // CINEMA SHOWCASE</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase">
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase font-sans">
               THE REEL MATRIX
             </h2>
-            <p className="text-sm text-zinc-400 max-w-xl font-sans">
-              Select any film card to launch the high-resolution Cinema Viewport, inspect camera telemetry, lens specifications, and scene breakdowns.
+            <p className="text-sm text-zinc-400 max-w-xl font-light leading-relaxed">
+              Launch any film card to view the full 4K cinema viewport, inspect camera telemetry, lens specifications, and scene breakdowns.
             </p>
           </div>
 
           {/* Filter Pills */}
-          <div className="flex flex-wrap gap-2 bg-zinc-900/80 p-1.5 rounded-full border border-white/10">
+          <div className="flex flex-wrap gap-2 glass-slate p-1.5 rounded-full border border-white/10">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -130,9 +130,10 @@ export default function ReelMatrixSection({ onSelectFilm }) {
                   playClick();
                   setActiveFilter(cat);
                 }}
-                className={`px-4 py-2 rounded-full text-xs font-mono transition-all ${
+                data-cursor="hover"
+                className={`px-4 py-2 rounded-full text-xs font-mono tracking-wider transition-all ${
                   activeFilter === cat
-                    ? 'bg-white text-black font-bold'
+                    ? 'bg-white text-black font-semibold shadow-lg'
                     : 'text-zinc-400 hover:text-white'
                 }`}
               >
@@ -143,40 +144,42 @@ export default function ReelMatrixSection({ onSelectFilm }) {
         </div>
 
         {/* Film Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
           {filteredFilms.map((film, idx) => (
             <motion.div
               key={film.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
               viewport={{ once: true }}
               onClick={() => {
                 playClick();
                 onSelectFilm(film);
               }}
-              className="group relative rounded-3xl overflow-hidden glass-panel glass-panel-hover border border-white/10 cursor-pointer"
+              data-cursor="play"
+              data-cursor-text="OPEN REEL"
+              className="group relative rounded-3xl overflow-hidden glass-slate glass-slate-hover border border-white/10 cursor-pointer"
             >
               {/* Card Image Stage */}
               <div className="relative aspect-video overflow-hidden bg-black">
                 <img
                   src={film.image}
                   alt={film.title}
-                  className="w-full h-full object-cover opacity-75 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700"
+                  className="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 ease-out"
                 />
 
                 {/* Top Badge Overlay */}
                 <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10 font-mono text-[10px]">
-                  <span className="bg-black/80 border border-white/20 px-3 py-1 rounded-full text-white uppercase tracking-wider font-bold">
+                  <span className="bg-black/80 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-white uppercase tracking-wider font-semibold">
                     {film.category}
                   </span>
-                  <span className="bg-black/80 border border-white/10 px-3 py-1 rounded-full text-zinc-300">
+                  <span className="bg-black/80 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-zinc-300">
                     {film.duration}
                   </span>
                 </div>
 
-                {/* Hover Play Button */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                {/* Hover Play Icon Ring */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 bg-black/30 backdrop-blur-[1px]">
                   <div className="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform">
                     <Play className="w-6 h-6 fill-current translate-x-0.5" />
                   </div>
@@ -184,9 +187,9 @@ export default function ReelMatrixSection({ onSelectFilm }) {
               </div>
 
               {/* Card Content Info */}
-              <div className="p-6 space-y-3 font-mono">
+              <div className="p-6 md:p-8 space-y-3 font-mono">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-bold text-white group-hover:text-zinc-200 transition-colors flex items-center gap-2 uppercase">
+                  <h3 className="text-lg font-bold text-white group-hover:text-zinc-200 transition-colors flex items-center gap-2 uppercase tracking-wide">
                     {film.title}
                     <ArrowUpRight className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
                   </h3>
@@ -197,9 +200,9 @@ export default function ReelMatrixSection({ onSelectFilm }) {
                   {film.description}
                 </p>
 
-                {/* Award badges */}
+                {/* Award Badges */}
                 <div className="pt-2 flex flex-wrap gap-2 text-[10px]">
-                  <span className="flex items-center gap-1.5 bg-zinc-900 px-3 py-1 rounded-full border border-white/10 text-zinc-300">
+                  <span className="flex items-center gap-1.5 bg-zinc-900/90 px-3 py-1 rounded-full border border-white/10 text-zinc-300">
                     <Award className="w-3 h-3 text-white" />
                     {film.awards[0]}
                   </span>
@@ -212,3 +215,4 @@ export default function ReelMatrixSection({ onSelectFilm }) {
     </section>
   );
 }
+

@@ -52,20 +52,20 @@ export default function ProjectEstimatorSection({ onOpenBooking }) {
   };
 
   return (
-    <section id="estimator" className="py-28 px-4 relative bg-[#050505] border-t border-white/10">
-      <div className="max-w-7xl mx-auto space-y-12 relative z-10 font-mono">
+    <section id="estimator" className="py-32 px-4 md:px-8 relative bg-[#060608] border-t border-white/10">
+      <div className="max-w-7xl mx-auto space-y-14 relative z-10 font-mono">
         {/* Section Header */}
         <div className="text-center space-y-3 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 text-xs text-zinc-400 uppercase tracking-widest px-4 py-1.5 rounded-full bg-zinc-900 border border-white/10">
             <Calculator className="w-4 h-4 text-white" />
-            <span>MODULE 04 // PROJECT ESTIMATOR & HUBS</span>
+            <span>MODULE 04 // BUDGET ESTIMATOR</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase">
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight uppercase font-sans">
             ESTIMATE YOUR PRODUCTION
           </h2>
 
-          <p className="text-sm text-zinc-400 font-sans leading-relaxed">
+          <p className="text-sm text-zinc-400 font-light leading-relaxed">
             Configure your film parameters to receive an instant studio estimate and initiate director booking.
           </p>
         </div>
@@ -73,7 +73,7 @@ export default function ProjectEstimatorSection({ onOpenBooking }) {
         {/* Main Estimator Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Controls (7 Cols) */}
-          <div className="lg:col-span-7 glass-panel rounded-3xl border border-white/10 p-6 sm:p-8 space-y-8">
+          <div className="lg:col-span-7 glass-slate rounded-3xl border border-white/10 p-6 sm:p-8 space-y-8">
             {/* Step 1: Film Type */}
             <div className="space-y-3">
               <label className="text-xs text-white uppercase tracking-widest block">
@@ -89,10 +89,11 @@ export default function ProjectEstimatorSection({ onOpenBooking }) {
                         playClick();
                         setFilmType(type.name);
                       }}
+                      data-cursor="hover"
                       className={`py-3 px-2 rounded-xl border text-xs transition-all text-center ${
                         active
                           ? 'border-white bg-white text-black font-bold shadow-lg'
-                          : 'border-white/10 bg-zinc-900 text-zinc-400 hover:border-white/20'
+                          : 'border-white/10 bg-zinc-900/60 text-zinc-400 hover:border-white/20'
                       }`}
                     >
                       {type.name}
@@ -114,10 +115,11 @@ export default function ProjectEstimatorSection({ onOpenBooking }) {
                     <button
                       key={item.id}
                       onClick={() => toggleDeliverable(item.id)}
+                      data-cursor="hover"
                       className={`p-3.5 rounded-xl border text-left text-xs transition-all flex items-center justify-between ${
                         active
                           ? 'border-white bg-zinc-900 text-white font-bold'
-                          : 'border-white/10 bg-zinc-950 text-zinc-400 hover:border-white/20'
+                          : 'border-white/10 bg-zinc-950/60 text-zinc-400 hover:border-white/20'
                       }`}
                     >
                       <span className="flex items-center gap-2">
@@ -153,10 +155,11 @@ export default function ProjectEstimatorSection({ onOpenBooking }) {
                       playClick();
                       setTimeline(t.value);
                     }}
+                    data-cursor="hover"
                     className={`py-2.5 rounded-xl border text-xs transition-all ${
                       timeline === t.value
                         ? 'border-white bg-white text-black font-bold'
-                        : 'border-white/10 bg-zinc-950 text-zinc-400'
+                        : 'border-white/10 bg-zinc-950/60 text-zinc-400'
                     }`}
                   >
                     {t.label}
@@ -167,7 +170,7 @@ export default function ProjectEstimatorSection({ onOpenBooking }) {
           </div>
 
           {/* Right Summary & Booking CTA (5 Cols) */}
-          <div className="lg:col-span-5 glass-panel rounded-3xl border border-white/10 p-8 space-y-6 shadow-2xl bg-[#0A0A0C]">
+          <div className="lg:col-span-5 glass-slate rounded-3xl border border-white/10 p-8 space-y-6 shadow-2xl bg-[#0a0a0d]">
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <span className="text-xs text-white uppercase tracking-widest flex items-center gap-2">
                 ESTIMATE BREAKDOWN
@@ -198,7 +201,7 @@ export default function ProjectEstimatorSection({ onOpenBooking }) {
               <span className="text-xs text-zinc-500 uppercase tracking-widest block">
                 TOTAL ESTIMATED INVESTMENT
               </span>
-              <div className="text-4xl sm:text-5xl font-black text-white tracking-tight">
+              <div className="text-4xl sm:text-5xl font-black text-white tracking-tight font-sans">
                 ${totalEstimate.toLocaleString()}
               </div>
               <p className="text-[11px] text-zinc-400 font-sans leading-relaxed">
@@ -208,7 +211,8 @@ export default function ProjectEstimatorSection({ onOpenBooking }) {
 
             <button
               onClick={handleInitiateBooking}
-              className="w-full py-4 rounded-full bg-white hover:bg-zinc-200 text-black font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-3 transition-all shadow-xl hover:scale-105"
+              data-cursor="magnetic"
+              className="w-full py-4 rounded-full bg-white hover:bg-zinc-200 text-black font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-3 transition-all shadow-xl hover:scale-105 active:scale-95"
             >
               <Send className="w-4 h-4" />
               <span>INITIATE DIRECTOR BOOKING</span>
@@ -219,3 +223,4 @@ export default function ProjectEstimatorSection({ onOpenBooking }) {
     </section>
   );
 }
+
